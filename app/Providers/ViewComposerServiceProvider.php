@@ -11,20 +11,17 @@ class ViewComposerServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		view()->composer('partials.nav', function($view) {
-			$connection = \Redis::connection();
+		$connection = \Redis::connection();
 
-			try {
-				$redisInfo = $connection->info();
-				$isConnected = true;
-			} catch (\Exception $e) {
-				\Session::flash('errors', $e->getMessage());
-				$redisInfo = null;
-				$isConnected = false;
-			}
-			$view->with('isConnected', $isConnected);
-			$view->with('redisInfo', $redisInfo);
-		});
+		try {
+			$serverInfo = $connection->info();
+			$isConnected = true;
+		} catch (\Exception $e) {
+			\Session::flash('error', 'Check Redis server connection. ' . $e->getMessage());
+			$serverInfo = null;
+			$isConnected = false;
+		}
+		\View::share(compact('isConnected', 'serverInfo'));
 	}
 
 	/**

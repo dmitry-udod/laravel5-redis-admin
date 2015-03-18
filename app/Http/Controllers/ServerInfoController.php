@@ -3,7 +3,7 @@
 class ServerInfoController extends Controller
 {
 	/**
-	 * Show the application welcome screen to the user.
+	 * Show redis server info
 	 *
 	 * @return Response
 	 */
