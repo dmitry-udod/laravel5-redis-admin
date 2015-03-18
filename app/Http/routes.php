@@ -12,3 +12,8 @@
 */
 
 Route::get('/', 'WelcomeController@index');
+
+Route::group(['prefix' => 'l5-redis-admin'], function()
+{
+    Route::get('server-info', ['as' => 'server-info', 'uses' => 'ServerInfoController@index']);
+});
